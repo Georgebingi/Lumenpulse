@@ -187,7 +187,7 @@ export class MetricsService {
    * Useful for JSON-based monitoring endpoints
    * @returns Object with metric values
    */
-  async getMetricsAsJson(): Promise<Record<string, unknown>> {
+  getMetricsAsJson(): Record<string, unknown> {
     const metricsArray = register.getMetricsAsArray();
     const result: Record<string, unknown> = {};
 

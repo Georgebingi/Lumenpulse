@@ -48,7 +48,7 @@ export class MetricsController {
   ): Promise<void> {
     try {
       if (format === 'json') {
-        const metricsJson = await this.metricsService.getMetricsAsJson();
+        const metricsJson = this.metricsService.getMetricsAsJson();
         response.json(metricsJson);
       } else {
         // Default: Prometheus format
@@ -88,9 +88,9 @@ export class MetricsController {
     status: 403,
     description: 'Forbidden - IP not in allowlist and no valid JWT',
   })
-  async getMetricsJson(@Res() response: Response): Promise<void> {
+  getMetricsJson(@Res() response: Response): void {
     try {
-      const metricsJson = await this.metricsService.getMetricsAsJson();
+      const metricsJson = this.metricsService.getMetricsAsJson();
       response.json(metricsJson);
     } catch (error) {
       this.logger.error('Error getting metrics:', error);

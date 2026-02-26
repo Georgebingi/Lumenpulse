@@ -34,10 +34,13 @@ export class MetricsInterceptor implements NestInterceptor {
         next: () => {
           this.recordMetrics(method, route, response.statusCode, startTime);
         },
-        error: (error) => {
+        error: (error: unknown) => {
           // For errors, try to get status code from error or use 500
-          const statusCode = error.status || error.statusCode || 500;
-          this.recordMetrics(method, route, statusCode, startTime);
+          const statusCode =
+            (error as Record<string, unknown>)?.status ||
+            (error as Record<string, unknown>)?.statusCode ||
+            500;
+          this.recordMetrics(method, route, statusCode as number, startTime);
         },
       }),
     );
